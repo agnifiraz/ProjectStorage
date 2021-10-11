@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 02</title>
+
+    <!-- CSS view for design  -->
+    <style>
+        .container {
+            width: 400px;
+            border: 1px solid black;
+            padding: 25px;
+            float: left;
+            margin-right: 50px;
+        }
+
+        .innerCon {
+            display: grid;
+            grid-template-columns: 150px 180px auto;
+            padding: 10px;
+			gap: 10px;
+            width: 370px;
+            min-height: 400px;
+            border: 1px solid black;
+        }
+		
+		.buttonCon {
+            display: grid;
+            grid-template-columns: auto auto;
+            padding: 10px;
+			gap: 25px 20px;
+            width: 370px;
+            min-height: 100px;
+            border: 1px solid black;
+        }
+		
+        input[text] {
+            padding: 20px;
+            width: 100px;
+        }
+
+            input[type=text] {
+                padding: 0;
+                margin: 0;
+                height: 40px;
+                width: 200px;
+            }
+     
+    </style>
+    <!-- End of CSS view for design  -->
+</head>
+<body>
+    <!--Creating nice layout for output-->
+    <div id="contentDIV" class="container">
+
+        <h1 style="text-align: center;">Video Device</h1>
+        <div class="innerCon">
+            <label><b>Replacement Cost:</b></label>
+            <input type="text" id="vdReplacementCost" />
+            <br />
+            <label><b>Supplier Name:</b></label>
+            <input type="text" id="vdSupplierName" />
+            <br />
+            <label><b>Serial Number:</b></label>
+            <input type="text" id="vdSerialNumber" />
+            <br />
+            <label><b>Resolution:</b></label>
+            <input type="text" id="vdResolution" />
+            <br />
+            <label><b>Type:</b></label>
+            <select id="vdType">
+                <option>LCD</option>
+                <option>LED</option>
+                <option>Plasma</option>
+            </select>
+            <br />
+            <label><b>Status</b></label>
+            <input type="checkbox" name="vdStatus" id="vdStatus" />
+        </div>
+		<div class="buttonCon">
+	
+			<input type='button' value='Previous' id="previousVD" onclick='Previous()' />
+			<input type='button' value='Next' id="nextVD" onclick='Next()' />
+			<input type='button' value='New' id="newVD" onclick='New()' />
+			<input type='button' value='Update' id="updateVD" onclick='Update()' />
+		 </div>
+	</div>
+    <div id="contentDIV" class="container">
+        <h1 style="text-align: center;">Hard Disk</h1>
+        <div class="innerCon">
+            <label><b>Replacement Cost:</b></label>
+            <input type="text" id="hdReplacementCost" />
+            <br />
+            <label><b>Supplier Name:</b></label>
+            <input type="text" id="hdSupplierName" />
+            <br />
+            <label><b>Serial Number:</b></label>
+            <input type="text" id="hdSerialNumber" />
+            <br />
+            <label><b>Size:</b></label>
+            <input type="text" id="hdSize" />
+            <br />
+            <label><b>Transfer Rate:</b></label>
+            <input type="text" id="hdTransferRate" />
+            <br />
+            <label><b>Platter Size:</b></label>
+            <input type="text" id="hdPlatterSize" />
+            <br />
+            <label><b>Num Platter:</b></label>
+            <input type="text" id="hdNumPlatter" />
+            <br />
+            <label><b>Status</b></label>
+            <input type="checkbox" name="hdStatus" id="hdStatus" />
+
+        </div>
+	<div class="buttonCon">
+        <input type='button' value='Previous' id="previousHD" onclick='Previous()' />
+        <input type='button' value='Next' id="nextHD" onclick='Next()' />
+        <input type='button' value='New' id="newHD" onclick='New()' />
+        <input type='button' value='Update' id="updateHD" onclick='Update()' />
+	</div>
+    </div>
+    <div id="contentDIV" class="container">
+
+        <h1 style="text-align: center;">SSD</h1>
+        <div class="innerCon">
+            <label><b>Replacement Cost:</b></label>
+            <input type="text" id="ssdReplacementCost" />
+            <br />
+            <label><b>Supplier Name:</b></label>
+            <input type="text" id="ssdSupplierName" />
+            <br />
+            <label><b>Serial Number:</b></label>
+            <input type="text" id="ssdSerialNumber" />
+            <br />
+            <label><b>Wear Leveling:</b></label>
+            <div>
+                <input type="radio" name="ssdWearLeveling" id="ssdYes" value="Yes" />Yes
+                <input type="radio" name="ssdWearLeveling" id="ssdNo" value="No" />No
+            </div>
+            <br />
+            <label><b>Type:</b></label>
+            <select id="ssdType">
+                <option>Flash</option>
+                <option>LED</option>
+                <option>Flash</option>
+            </select>
+            <br />
+            <label><b>Status</b></label>
+            <input type="checkbox" name="ssdStatus" id="ssdStatus" />
+        </div>
+	<div class="buttonCon">
+        <input type='button' value='Previous' id="previousSSD" onclick='Previous()' />
+        <input type='button' value='Next' id="nextSSD" onclick='Next()' />
+        <input type='button' value='New' id="newSSD" onclick='New()' />
+        <input type='button' value='Update' id="updateSSD" onclick='Update()' />
+	</div>
+    </div>
+    <script>
+
+
+
+        //Base class
+        class Device {
+            #replacementCost = 40;
+            #supplierName = "Rob";
+            #serialNumber = "123-456-789";
+            #status = 0;
+
+        // Constructor
+            constructor(replacementCost, supplierName, serialNumber, status) {
+                this._replacementCost = replacementCost;
+                this._supplierName = supplierName;
+                this._serialNumber = serialNumber;
+                this._status = status;
+            }
+
+            get replacementCost() {
+                return this.#replacementCost;
+            }
+            set replacementCost(replacementCost) {
+                this.#replacementCost = replacementCost;
+            }
+            get supplierName() {
+                return this.#supplierName;
+            }
+            set supplierName(supplierName) {
+                this.#supplierName = supplierName;
+            }
+            get serialNumber() {
+                return this.#serialNumber;
+            }
+            set serialNumber(serialNumber) {
+                this.#serialNumber = serialNumber;
+            }
+
+            get status() {
+                return this.#status;
+            }
+
+             // A method is used to control the  status property 1 = enabled.
+            enable() {
+                this.#status = 1;
+                return this.#status;
+            }
+            
+             // A method is used to control the  status property 0 = disabled.
+            disable() {
+                this.#status = 0;
+                return this.#status;
+            }
+
+        }
+
+        //Derived class VideoDevice from base class Device
+
+        class VideoDevice extends Device {
+            #resolution = "3840 X 2164";
+            #type = "LCD";
+            constructor(replacementCost, supplierName, serialNumber, status, resolution, type) {
+                super(replacementCost, supplierName, serialNumber, status);
+                this._resolution = resolution;
+                this._type = type;
+            }
+
+            get resolution() {
+                return this.#resolution;
+            }
+            set resolution(resolution) {
+                this.#resolution = resolution;
+            }
+            get type() {
+                return this.#type;
+            }
+            set type(type) {
+                this.#type = type;
+            }
+
+        }
+
+        //Derived class DiskDevice from base class Device
+        class DiskDevice extends Device {
+            #size = "4TB";
+            #transferRate = "7GB/second";
+            constructor(replacementCost, supplierName, serialNumber, status, size, transferRate) {
+                super(replacementCost, supplierName, serialNumber, status);
+                this._size = size;
+                this._transferRate = transferRate;
+            }
+
+            get size() {
+                return this.#size;
+            }
+            set size(size) {
+                this.#size = size;
+            }
+            get transferRate() {
+                return this.#transferRate;
+            }
+            set transferRate(transferRate) {
+                this.#transferRate = transferRate;
+            }
+        }
+
+        //Derived class HardDisk that inherit from the class DiskDevice
+        class HardDisk extends DiskDevice {
+            #platterSize = "2.5 inches";
+            #numPlatter = 10;
+            constructor(replacementCost, supplierName, serialNumber, status, size, transferRate, platterSize, numPlatter) {
+                super(replacementCost, supplierName, serialNumber, status, size, transferRate);
+                this._platterSize = platterSize;
+                this._numPlatter = numPlatter;
+            }
+            get platterSize() {
+                return this.#platterSize;
+            }
+            set platterSize(platterSize) {
+                this.#platterSize = platterSize;
+            }
+            get numPlatter() {
+                return this.#numPlatter;
+            }
+            set numPlatter(numPlatter) {
+                this.#numPlatter = numPlatter;
+            }
+        }
+
+        //Derived class SSD that inherit from the class DiskDevice
+        class SSD extends DiskDevice {
+            #type = "Flash";
+            #wearLeveling = false;
+            constructor(replacementCost, supplierName, serialNumber, status, size, transferRate, type, wearLeveling) {
+                super(replacementCost, supplierName, serialNumber, status, size, transferRate);
+                this.#type = type;
+                this.#wearLeveling = wearLeveling;
+            }
+            get type() {
+                return this.#type;
+            }
+            set type(type) {
+                this.#type = type;
+            }
+            get wearLeveling() {
+                return this.#wearLeveling;
+            }
+            set wearLeveling(wearLeveling) {
+                this.#wearLeveling = wearLeveling;
+            }
+        }
+
+
+        // Creating the required global variables and arrays
+
+        let videoDevices = [];
+        let hardDisks = [];
+        let sSSDs = [];
+
+        let vdIndex = 0;
+        let hdIndex = 0;
+        let ssdIndex = 0;
+
+
+        //This function creates functionality for the previous button
+        function Previous() {   //buttonFunctionPrevious
+            var id = window.event.srcElement.id;
+
+            if (id === "previousVD") {
+                vdIndex--;
+                if (vdIndex < 0) {
+                    vdIndex = 0;
+                    alert("You reach the first result!");
+                }
+                vdData(videoDevices[vdIndex]);
+
+            } else if (id === "previousHD") {
+                hdIndex--;
+                if (hdIndex < 0) {
+                    hdIndex = 0;
+                    alert("You reach the first result!");
+                }
+                hdData(hardDisks[hdIndex]);
+
+
+            } else if (id === "previousSSD") {
+                ssdIndex--;
+                if (ssdIndex < 0) {
+                    ssdIndex = 0;
+                    alert("You reach the first result!");
+                }
+
+                ssdData(sSSDs[ssdIndex]);
+            }
+
+        }
+
+
+
+        //This function creates functionality for the next button
+        function Next() {
+            var id = window.event.srcElement.id;
+
+            if (id === "nextVD") {
+                vdIndex++;
+                if (vdIndex >= videoDevices.length) {
+                    vdIndex--;
+                    alert("You reach the last result!");
+                }
+
+                vdData(videoDevices[vdIndex]);
+
+            } else if (id === "nextHD") {
+                hdIndex++;
+                if (hdIndex >= hardDisks.length) {
+                    hdIndex--;
+                    alert("You reach the last result!");
+                }
+
+                hdData(hardDisks[hdIndex]);
+            } else if (id === "nextSSD") {
+
+                ssdIndex++;
+                if (ssdIndex >= sSSDs.length) {
+                    ssdIndex--;
+                    alert("You reach the last result!");
+                } else {
+                    ssdData(sSSDs[ssdIndex]);
+                }
+
+
+
+            }
+        }
+
+        //This function creates functionality for the New button
+        function New() {
+
+            var id = window.event.srcElement.id;
+
+            if (id === "newVD") {
+                videoDevices.push(new VideoDevice());
+                vdData(videoDevices[videoDevices.length - 1]);
+                vdIndex = videoDevices.length - 1;
+
+            } else if (id === "newHD") {
+                hardDisks.push(new HardDisk());
+                hdData(hardDisks[hardDisks.length - 1]);
+                hdIndex = hardDisks.length - 1;
+
+            } else if (id === "newSSD") {
+                sSSDs.push(new SSD());
+                ssdData(sSSDs[sSSDs.length - 1]);
+                ssdIndex = sSSDs.length - 1;
+            }
+
+
+        }
+
+
+        //Create udpate object from html controls function and call it from "Update"
+        let Update = () => {
+
+            var id = window.event.srcElement.id;
+
+            if (id === "updateVD") {
+
+                //Getting a value from html elements to relevant variables
+                var vdReplacementCost = document.getElementById('vdReplacementCost').value;
+                var vdSupplierName = document.getElementById('vdSupplierName').value;
+                var vdSerialNumber = document.getElementById('vdSerialNumber').value;
+                var vdResolution = document.getElementById('vdResolution').value;
+                var vdType = document.getElementById('vdType').value;
+
+
+                videoDevices[vdIndex].replacementCost = vdReplacementCost;
+                videoDevices[vdIndex].supplierName = vdSupplierName;
+                videoDevices[vdIndex].serialNumber = vdSerialNumber;
+                videoDevices[vdIndex].resolution = vdResolution;
+                videoDevices[vdIndex].type = vdType;
+
+                if (vdStatus.checked) {
+                    videoDevices[vdIndex].enable();
+                } else {
+                    videoDevices[vdIndex].disable();
+                }
+
+            } else if (id === "updateHD") {
+
+                //Getting a value from html elements to relevant variables
+                var hdReplacementCost = document.getElementById('hdReplacementCost').value;
+                var hdSupplierName = document.getElementById('hdSupplierName').value;
+                var hdSerialNumber = document.getElementById('hdSerialNumber').value;
+                var hdSize = document.getElementById('hdSize').value;
+                var hdTransferRate = document.getElementById('hdTransferRate').value;
+                var hdPlatterSize = document.getElementById('hdPlatterSize').value;
+                var hdNumPlatter = document.getElementById('hdNumPlatter').value;
+
+                hardDisks[hdIndex].replacementCost = hdReplacementCost;
+                hardDisks[hdIndex].supplierName = hdSupplierName;
+                hardDisks[hdIndex].serialNumber = hdSerialNumber;
+                hardDisks[hdIndex].size = hdSize;
+                hardDisks[hdIndex].transferRate = hdTransferRate;
+                hardDisks[hdIndex].platterSize = hdPlatterSize;
+                hardDisks[hdIndex].numPlatter = hdNumPlatter;
+
+                if (hdStatus.checked) {
+                    hardDisks[hdIndex].enable();
+                } else {
+                    hardDisks[hdIndex].disable();
+                }
+
+            } else if (id === "updateSSD") {
+
+                //Getting a value from html elements to relevant variables
+                var ssdReplacementCost = document.getElementById('ssdReplacementCost').value;
+                var ssdSupplierName = document.getElementById('ssdSupplierName').value;
+                var ssdSerialNumber = document.getElementById('ssdSerialNumber').value;
+                var ssdWearLeveling = document.getElementsByName('ssdWearLeveling');
+                var ssdType = document.getElementById('ssdType').value;
+
+                 //Assigning value to html elements
+                sSSDs[ssdIndex].replacementCost = ssdReplacementCost;
+                sSSDs[ssdIndex].supplierName = ssdSupplierName;
+                sSSDs[ssdIndex].serialNumber = ssdSerialNumber;
+
+                if (ssdWearLeveling[0].checked) {
+                    sSSDs[ssdIndex].wearLeveling = true;
+                } else {
+                    sSSDs[ssdIndex].wearLeveling = false;
+                }
+
+                if (ssdStatus.checked) {
+                    sSSDs[ssdIndex].enable();
+                } else {
+                    sSSDs[ssdIndex].disable();
+                }
+
+
+                console.log(sSSDs[ssdIndex].wearLeveling);
+                sSSDs[ssdIndex].type = ssdType;
+            }
+
+            console.log(videoDevices);
+            console.log(vdIndex);
+            console.log(hardDisks);
+            console.log(sSSDs);
+
+        }
+
+
+        // This function assignin
+        function vdData(object) {
+
+            //Assigning value of html elements to relevant variables
+            var vdReplacementCost = document.getElementById('vdReplacementCost');
+            var vdSupplierName = document.getElementById('vdSupplierName');
+            var vdSerialNumber = document.getElementById('vdSerialNumber');
+            var vdResolution = document.getElementById('vdResolution');
+            var vdType = document.getElementById('vdType');
+            var vdStatus = document.getElementById('vdStatus');
+
+            //Assigning value to html elements
+            vdReplacementCost.value = object.replacementCost;
+            vdSupplierName.value = object.supplierName;
+            vdSerialNumber.value = object.serialNumber;
+            vdResolution.value = object.resolution;
+            vdType.value = object.type;
+            vdStatus = object.status;
+
+            //Validating status
+            if (vdStatus) {
+                document.getElementById('vdStatus').checked = true;
+            } else {
+                document.getElementById('vdStatus').checked = false;
+            }
+
+        }
+
+        function hdData(object) {
+
+            //Assigning value of html elements to relevant variables
+            var hdReplacementCost = document.getElementById('hdReplacementCost');
+            var hdSupplierName = document.getElementById('hdSupplierName');
+            var hdSerialNumber = document.getElementById('hdSerialNumber');
+            var hdSize = document.getElementById('hdSize');
+            var hdTransferRate = document.getElementById('hdTransferRate');
+            var hdPlatterSize = document.getElementById('hdPlatterSize');
+            var hdNumPlatter = document.getElementById('hdNumPlatter');
+            var hdStatus = document.getElementById('hdStatus');
+
+            //Assigning value to html elements
+            hdReplacementCost.value = object.replacementCost;
+            hdSupplierName.value = object.supplierName;
+            hdSerialNumber.value = object.serialNumber;
+            hdSize.value = object.size;
+            hdTransferRate.value = object.transferRate;
+            hdPlatterSize.value = object.platterSize;
+            hdNumPlatter.value = object.platterSize;
+            hdStatus = object.status;
+
+           //Validating status
+            if (hdStatus) {
+                document.getElementById('hdStatus').checked = true;
+            } else {
+                document.getElementById('hdStatus').checked = false;
+            }
+        }
+
+        function ssdData(object) {
+
+            //Assigning value of html elements to relevant variables
+            var ssdReplacementCost = document.getElementById('ssdReplacementCost');
+            var ssdSupplierName = document.getElementById('ssdSupplierName');
+            var ssdSerialNumber = document.getElementById('ssdSerialNumber');
+            var ssdWearLeveling = document.getElementsByName('ssdWearLeveling');
+            var ssdType = document.getElementById('ssdType');
+            var ssdStatus = document.getElementById('ssdStatus');
+
+            //Assigning value to html elements
+            ssdReplacementCost.value = object.replacementCost;
+            ssdSupplierName.value = object.supplierName;
+            ssdSerialNumber.value = object.serialNumber;
+            ssdWearLeveling = object.wearLeveling;
+
+             //Validating Wear Leveling
+            if (ssdWearLeveling) {
+                document.getElementById('ssdYes').checked = true;
+            } else {
+                document.getElementById('ssdNo').checked = true;
+            }
+            ssdType.value = object.type;
+
+            ssdStatus = object.status;
+
+            //Validating status
+            if (ssdStatus) {
+                document.getElementById('ssdStatus').checked = true;
+            } else {
+                document.getElementById('ssdStatus').checked = false;
+            }
+
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+
